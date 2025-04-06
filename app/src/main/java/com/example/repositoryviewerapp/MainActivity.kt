@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RepositoryViewerAppTheme {
-                RepositoryViewerAppTheme {
+            
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
-            }
+            
         }
     }
 }
