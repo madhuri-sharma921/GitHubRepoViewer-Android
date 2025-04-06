@@ -29,12 +29,12 @@ import com.example.repositoryviewerapp.ui.components.RepositoryList
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
-    onRepositoryClick: (Long) -> Unit
+    onRepositoryClick: (Long) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
+    
 ) {
     val repositories = viewModel.repositoriesFlow.collectAsLazyPagingItems()
-    val focusManager = LocalFocusManager.current
-
+   
     Scaffold(
         topBar = {
             TopAppBar(
@@ -47,46 +47,10 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedTextField(
-                    value = viewModel.username,
-                    onValueChange = { viewModel.updateUsername(it) },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp),
-                    label = { Text("GitHub Username") },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {
-                            viewModel.searchRepositories(viewModel.username)
-                            focusManager.clearFocus()
-                        }
-                    )
-                )
-
-                Button(
-                    onClick = {
-                        viewModel.searchRepositories(viewModel.username)
-                        focusManager.clearFocus()
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search"
-                    )
-                }
-            }
-
             RepositoryList(
                 repositories = repositories,
                 onRepositoryClick = onRepositoryClick
             )
         }
-    }
+    }  
 }
